@@ -31,3 +31,32 @@ CREATE TABLE Bookings (
     ),
     total_cost int CHECK (total_cost >= 0)
 );
+
+-- Query-1
+SELECT
+    *
+FROM
+    matches
+WHERE
+    tournament_category = 'Champions League'
+    AND match_status = 'Available'
+
+-- Query-2
+SELECT
+    *
+FROM
+    users
+WHERE
+    full_name ILIKE 'Tanvir%'
+    OR full_name ILIKE '%Haque%'
+    
+-- Query-3
+SELECT
+    booking_id,
+    user_id,
+    match_id,
+    COALESCE(payment_status, 'Action Required') AS systematic_status
+FROM
+    bookings
+WHERE
+    payment_status IS NULL;
