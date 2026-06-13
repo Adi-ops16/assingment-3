@@ -49,7 +49,7 @@ FROM
 WHERE
     full_name ILIKE 'Tanvir%'
     OR full_name ILIKE '%Haque%'
-    
+
 -- Query-3
 SELECT
     booking_id,
@@ -60,3 +60,48 @@ FROM
     bookings
 WHERE
     payment_status IS NULL;
+
+-- Query-4
+SELECT
+    b.booking_id,
+    b.total_cost,
+    u.full_name,
+    m.fixture
+FROM
+    bookings AS b
+    JOIN matches AS m ON b.match_id = m.match_id
+    JOIN users AS u ON b.user_id = u.user_id
+
+-- Query-5
+SELECT
+    u.user_id,
+    u.full_name,
+    b.booking_id
+FROM
+    users AS u
+    LEFT JOIN bookings AS b ON u.user_id = b.user_id
+-- Query-6
+SELECT
+    booking_id,
+    match_id,
+    total_cost
+FROM
+    bookings
+WHERE
+    total_cost > (
+        SELECT
+            avg(total_cost)
+        FROM
+            bookings
+    )
+-- Query-7
+SELECT
+    *
+FROM
+    matches
+ORDER BY
+    base_ticket_price DESC
+LIMIT
+    2
+OFFSET
+    1
